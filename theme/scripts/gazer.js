@@ -8,18 +8,20 @@
 
     // Create the defaults once
     var pluginName = 'gazer',
-    defaults = {
-        url: [],
-        width: 52,
-        gazer: '.gazed',
-        ease: 'easeInOutBack'
-    };
+        defaults = {
+            url: '',
+            width: 52,
+            gazer: '.gazed',
+            progress: false,
+            ease: 'easeInOutBack',
+            done: function(){}
+        };
 
     // The actual plugin constructor
     function Plugin( element, options ) {
         this.element = element;
 
-        this.options = $.extend( {}, defaults, options) ;
+        this.options = $.extend({ done: function(){} }, defaults, options);
 
         this._defaults = defaults;
         this._name = pluginName;
@@ -29,56 +31,66 @@
 
     Plugin.prototype = {
 
-    start: function(element, options) {
+        start: function(element, options) {
 
-        var request = new XMLHttpRequest();
+            var file, request = new XMLHttpRequest();
 
-        request.addEventListener('progress', updateProgress, false);
-        request.addEventListener('load', transferComplete, false);
-        request.addEventListener('error', transferFailed, false);
-        request.addEventListener('abort', transferCanceled, false);
+            request.addEventListener('progress', updateProgress, false);
+            request.addEventListener('load', transferComplete, false);
+            request.addEventListener('error', transferFailed, false);
+            request.addEventListener('abort', transferCanceled, false);
 
-        request.open('GET', this.options.url, true);
-        request.send(null);
+            request.open('GET', this.options.url, true);
+            request.send(null);
 
-        options = this.options;
+            options = this.options;
 
-        // progress on transfers from the server to the client (downloads)
-        function updateProgress (evt) {
+            // progress on transfers from the server to the client (downloads)
+            function updateProgress (evt) {
 
-        if (evt.lengthComputable) {
-            var percentComplete = (evt.loaded / evt.total) * 100,
-            percentIntegrated = (percentComplete / 100) * options.width;
+                if (evt.lengthComputable) {
+                    var percentComplete = Math.floor((evt.loaded / evt.total) * 100),
+                        percentIntegrated = (percentComplete / 100) * options.width;
 
-            $(options.gazer).stop(true).animate({
-                width: percentIntegrated
-            });
-        } else {
-            // when good men do nothing                    
+                    // Display progress status
+                    if(options.progress != false) {
+                        $(options.progress).text(percentComplete);    
+                    }
+
+                    // Convert 'percentComplete' to preloader element's width
+                    $(options.gazer).stop(true).animate({
+                        width: percentIntegrated
+                    }, function() {
+                        options.done.call();
+                    });
+
+                } else {
+                    // when good men do nothing                    
+                }
+            }
+
+            function transferComplete(evt) {
+                console.log('The transfer is complete.');
+            }
+
+            function transferFailed(evt) {
+                console.log('An error occurred while transferring the file.');
+            }
+
+            function transferCanceled(evt) {
+                console.log('The transfer has been canceled by the user.');
+            }
+
+        },
+
+        stop: function(element, options) {
+            // when good men do nothing    
+        },
+
+        success: function(element, options) {
+            // when good men do nothing    
         }
-    }
 
-    function transferComplete(evt) {
-        console.log('The transfer is complete.');
-    }
-
-    function transferFailed(evt) {
-        console.log('An error occurred while transferring the file.');
-    }
-
-    function transferCanceled(evt) {
-        console.log('The transfer has been canceled by the user.');
-    }
-
-    },
-
-    stop: function(element, options) {
-        // when good men do nothing    
-    },
-
-    success: function(element, options) {
-        // when good men do nothing    
-    }
     };
 
     $.fn[pluginName] = function ( options ) {

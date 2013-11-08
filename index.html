@@ -35,6 +35,15 @@
             .github-btns {
                 margin-top: 20px;
             }
+
+            /* Progress */
+            #gazed-percent {
+                width: 100%;
+                height: 52px;
+                line-height: 52px;
+                text-align: center;
+                color: #555;
+            }
         </style>
 
     </head>
@@ -60,7 +69,10 @@
         <div class="gazer">
             <div id="gyro"></div>    
             <div class="gazed"></div>
+            <div class="status"></div>
         </div>
+
+        <div id="gazed-percent"></div>
 
         <div id="star"></div>
 
@@ -110,7 +122,22 @@
                 $('#star').gazer({
                     url: ['theme/images/test.gif'],
                     width: 52,
-                    ease: 'easeInOutBack'
+                    ease: 'easeInOutBack',
+                    progress: '#gazed-percent',
+                    done: function() {
+                        
+                        // Trigger stuffs on load complete
+                        spinner.stop();
+
+                        $('.gazer .gazed').hide();
+                        $('.gazer').animate({
+                            width: 104,
+                            borderRadius: 24
+                        });
+
+                        $('.gazer .status').text('Complete');
+
+                    }
                 });
 
                 // Call other methods 'outside'
