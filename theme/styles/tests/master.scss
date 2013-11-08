@@ -1,0 +1,57 @@
+
+// IMPORTS
+@import "../lib/functions";
+@import "../lib/mixins";
+//@import "../lib/required/normalize";
+
+body {
+	padding: 20px;
+}
+
+// ROUNDED-CORNERS
+.rounded-corners-default {
+	@include rounded-corners();
+	@include box();
+}
+
+.rounded-corners-custom {
+	@include rounded-corners(10px);
+	@include box();
+}
+
+// CLEARFIX
+.clearfix {
+	@extend .rounded-corners-default;
+	@include clearfix();
+}
+
+// ANCHOR LINKS
+.anchor-link {
+	@include anchor-links();
+}
+
+// GOLDEN RATIO
+.wrapper {
+	width: 960px;
+	margin: 0 auto;
+}
+
+// GRID
+.wrapper {
+	@include grid();
+}
+
+.row {
+	@include clearfix();
+	margin-bottom: 10px;
+}
+
+[class*=span]{
+	height: 30px;
+	display: block;
+	background-color: #e1e1e1;
+}
+
+.main {
+	@include clearfix();
+}

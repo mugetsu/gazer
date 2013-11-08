@@ -1,4 +1,4 @@
-gazer
+Gazer
 =====
 
-look good outside, and inside.
+A preloader based on **Ladda** (http://lab.hakim.se/ladda)

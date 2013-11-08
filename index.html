@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Gazer</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="look good outside, and inside.">
+        <meta name="author" content="Randell Quitain">
+
+        <!-- Styles -->
+        <link href="theme/styles/bootstrap-combined.min.css" rel="stylesheet">
+        <link href="theme/styles/gazer.css" rel="stylesheet">
+
+        <style type="text/css">
+            /* Custom container */
+            .container-narrow {
+                margin: 0 auto;
+                max-width: 960px;
+            }
+            .container-narrow > hr {
+                margin: 30px 0;
+            }
+
+            /* Main marketing message and sign up button */
+            .jumbotron {
+                margin: 40px 0;
+                text-align: center;
+            }
+            .jumbotron h1 {
+                font-size: 72px;
+                line-height: 1;
+            }
+
+            /* Github buttons */
+            .github-btns {
+                margin-top: 20px;
+            }
+        </style>
+
+    </head>
+
+    <body>
+
+        <div class="container-narrow">
+
+        <div class="jumbotron">
+            <h1>Gazer</h1>
+            <p class="lead">A preloader based on <a href="http://lab.hakim.se/ladda">Ladda</a></p>
+            <a class="btn btn-large btn-success" href="#">Download</a>
+            <p class="github-btns">
+                <iframe src="http://ghbtns.com/github-btn.html?user=mugetsu&repo=gazer&type=fork&count=true"
+                allowtransparency="true" frameborder="0" scrolling="0" width="80" height="20"></iframe>
+                <iframe src="http://ghbtns.com/github-btn.html?user=mugetsu&type=follow&count=true"
+                allowtransparency="true" frameborder="0" scrolling="0" width="160" height="20"></iframe>
+            </p>
+        </div>
+
+        <hr>
+        
+        <div class="gazer">
+            <div id="gyro"></div>    
+            <div class="gazed"></div>
+        </div>
+
+        <div id="star"></div>
+
+        <hr>
+
+        <div class="footer">
+            <p>&copy; Gazer | Randell Quitain 2013</p>
+        </div>
+
+        </div> <!-- /container -->
+
+        <!-- Javascripts -->
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="theme/scripts/jquery-1.10.2.min.js"><\/script>')</script>
+        <script type="text/javascript" src="theme/scripts/modernizr.js"></script>
+        <script type="text/javascript" src="theme/scripts/jquery.easing.1.3.js"></script>
+        <script type="text/javascript" src="theme/scripts/spin.min.js"></script>
+        <script type="text/javascript" src="theme/scripts/gazer.js"></script>
+
+        <script>
+            (function () {
+
+                // Spinner - http://fgnass.github.io/spin.js
+                var opts = {
+                    lines: 13, // The number of lines to draw
+                    length: 4, // The length of each line
+                    width: 3, // The line thickness
+                    radius: 8, // The radius of the inner circle
+                    corners: 1, // Corner roundness (0..1)
+                    rotate: 50, // The rotation offset
+                    direction: 1, // 1: clockwise, -1: counterclockwise
+                    color: '#FFF', // #rgb or #rrggbb or array of colors
+                    speed: 1, // Rounds per second
+                    trail: 60, // Afterglow percentage
+                    shadow: false, // Whether to render a shadow
+                    hwaccel: false, // Whether to use hardware acceleration
+                    className: 'spinner', // The CSS class to assign to the spinner
+                    zIndex: 2e9, // The z-index (defaults to 2000000000)
+                    top: 'auto', // Top position relative to parent in px
+                    left: 'auto' // Left position relative to parent in px
+                };
+
+                var target = document.getElementById('gyro');
+                var spinner = new Spinner(opts).spin(target);
+
+                // Initialize plugin
+                $('#star').gazer({
+                    url: ['theme/images/test.gif'],
+                    width: 52,
+                    ease: 'easeInOutBack'
+                });
+
+                // Call other methods 'outside'
+                // $('#star').data('gazer').stop();
+            })();
+        </script>
+
+    </body>
+</html>
