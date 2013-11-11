@@ -1,0 +1,30 @@
+@charset "UTF-8";
+/* ===============
+   GAZER
+   http://github.com/mugetsu
+   =============== */
+.gazer {
+  margin: 0 auto;
+  width: 52px;
+  height: 52px;
+  background-color: #555;
+  overflow: hidden;
+  border-radius: 50%; }
+.gazer #gyro .spinner {
+  top: -25px; }
+.gazer .gazed {
+  width: 0;
+  height: 52px;
+  background-color: #333; }
+.gazer .status {
+  width: 100%;
+  height: 52px;
+  line-height: 52px;
+  text-align: center;
+  color: #FFF; }
+
+/* END */
+/* ===============
+   GLOBALS
+   =============== */
+/* END */
